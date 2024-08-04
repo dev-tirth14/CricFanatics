@@ -34,7 +34,7 @@ public class MatchStat {
     private int wickets;
 
     @Column(name = "overs_played")
-    private int overs;
+    private double overs;
 
     @Override
     public boolean equals(Object o) {

@@ -1,14 +1,14 @@
 package com.example.CricFanatics.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Data
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PlayerDTO {
     private int id;
     private String fullName;

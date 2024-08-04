@@ -27,6 +27,9 @@ public class MatchService {
     @Autowired
     private PlayerService playerService;
 
+    @Autowired
+    private FanaticsTeamService fanaticsTeamService;
+
     public Set<Match> getAllMatches(){
         return Set.copyOf(matchRepo.findAll());
     }
@@ -100,8 +103,13 @@ public class MatchService {
 
         player.getStats().add(playerStat);
         match.getPlayer_stats().add(playerStat);
+        try{
+            matchRepo.save(match);
+            fanaticsTeamService.updateFanaticsPlayerScore(playerStat);
+        }catch (Exception e){
+            return Optional.empty();
+        }
 
-        matchRepo.save(match);
         return Optional.of(playerStat);
 
 

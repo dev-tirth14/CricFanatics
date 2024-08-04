@@ -1,11 +1,12 @@
 package com.example.CricFanatics;
 
-import com.example.CricFanatics.model.Match;
-import com.example.CricFanatics.model.MatchStat;
-import com.example.CricFanatics.model.Team;
-import com.example.CricFanatics.repository.MatchRepository;
-import com.example.CricFanatics.repository.PlayerRepository;
-import com.example.CricFanatics.repository.TeamRepository;
+import com.example.CricFanatics.dto.FanaticsTeamDTO;
+import com.example.CricFanatics.dto.FanaticsTeamPlayerDTO;
+import com.example.CricFanatics.dto.TournamentDTO;
+import com.example.CricFanatics.model.*;
+import com.example.CricFanatics.repository.*;
+import com.example.CricFanatics.service.TournamentService;
+import org.hibernate.jdbc.Expectation;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,9 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @SpringBootApplication
 public class CricFanaticsApplication {
@@ -22,83 +26,159 @@ public class CricFanaticsApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(TeamRepository teamRepo, MatchRepository matchRepo, PlayerRepository playerRepo) {
+	public CommandLineRunner commandLineRunner(TeamRepository teamRepo, MatchRepository matchRepo, PlayerRepository playerRepo, TournamentRepository tournamentRepo, FanaticTeamRepository fanaticTeamRepo, TournamentService tournamentService) {
 		return runner ->  {
-//			Team rcb=new Team(1,"Royal Challengers Banglore",3,new HashSet<>(), new HashSet<>());
-//			Team gt=new Team(2,"Gujarat Titans",2,new HashSet<>(), new HashSet<>());
-			Team gt=teamRepo.findById(1).get();
-			Team csk=teamRepo.findById(12).get();
-//
-//
-//			Player vk=new Player(1,"Virat Kohli", PlayerRole.BATSMAN,50,null, new HashSet<>());
-//			Player hp=new Player(2,"Hardik Pandya", PlayerRole.ALL_ROUNDER,50,null,new HashSet<>());
-//			Player rk=new Player(3,"Rashid Khan", PlayerRole.ALL_ROUNDER,50,null, new HashSet<>());
-//
-////			vk.setTeam(rcb);
-////			rcb.getSquad().add(vk);
-//
-//			hp.setTeam(gt);
-//			gt.getSquad().add(hp);
-//
-//			rk.setTeam(gt);
-//			gt.getSquad().add(rk);
-//
-//			teamRepo.save(gt);
-//			teamRepo.save(rcb);
-//
-			Match m1=new Match(1, LocalDateTime.now(),"Barbados",2,new HashSet<>(), new HashSet<>());
-//
-			MatchStat m1T1=new MatchStat(csk,m1,170,4,20);
-			MatchStat m1T2=new MatchStat(gt,m1,169,7,19);
-//
-			m1.getTeam_stats().add(m1T1);
-			m1.getTeam_stats().add(m1T2);
-			csk.getMatches().add(m1T1);
-			gt.getMatches().add(m1T2);
+//			Tournament tournament=new Tournament(
+//					"WCT20 2024",
+//					"tirth1415",
+//					1,
+//					TournamentStatus.UPCOMING,
+//					LocalDateTime.now(),
+//					6,
+//					2,
+//					2,
+//					0,
+//					0,
+//					1,
+//					2,
+//					1,
+//					25,
+//					10,
+//					0,
+//					0,
+//					0,
+//					0,
+//					0,
+//					new HashSet<>()
+//			);
+//			TournamentDTO dto=new TournamentDTO(
+//					"",
+//					"",
+//					1,
+//					"UPCOMING",
+//					LocalDateTime.now(),
+//					6,
+//					2,
+//					2,
+//					0,
+//					0,
+//					1,
+//					2,
+//					1,
+//					25,
+//					10,
+//					0,
+//					0,
+//					0,
+//					0,
+//					0,
+//					new HashSet<>()
+//			);
+//			Optional<Tournament> tournament=tournamentService.createTournament(dto);
+			FanaticsTeamDTO fanaticsTeamDTO=new FanaticsTeamDTO();
+			fanaticsTeamDTO.setName("Tirth's Strikers");
+			fanaticsTeamDTO.setOwner(1);
+			fanaticsTeamDTO.setStatus("PENDING");
+			fanaticsTeamDTO.setCreatedDate(LocalDateTime.now());
 
-			matchRepo.save(m1);
+			fanaticsTeamDTO.setSquad(
+					new HashSet<>(
+							List.of(
+									new FanaticsTeamPlayerDTO(
+											0,
+											3852
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											9844
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											3850
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											3993
+									)
+							)
+					)
+			);
 
-//			Match match=matchRepo.findById(1).get();
-//			Set<Team> teams=match.getTeams().stream().map(s->s.getTeam()).collect(Collectors.toSet());
+			FanaticsTeamDTO fanaticsTeamDTO2=new FanaticsTeamDTO();
+			fanaticsTeamDTO2.setName("Abhi's Apes");
+			fanaticsTeamDTO2.setOwner(2);
+			fanaticsTeamDTO2.setStatus("PENDING");
+			fanaticsTeamDTO2.setCreatedDate(LocalDateTime.now());
+
+			fanaticsTeamDTO2.setSquad(
+					new HashSet<>(
+							List.of(
+									new FanaticsTeamPlayerDTO(
+											0,
+											63751
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											65584
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											5313
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											26718
+
+									)
+							)
+					)
+			);
+
+			FanaticsTeamDTO fanaticsTeamDTO3=new FanaticsTeamDTO();
+			fanaticsTeamDTO3.setName("Team BJP");
+			fanaticsTeamDTO3.setOwner(3);
+			fanaticsTeamDTO3.setStatus("PENDING");
+			fanaticsTeamDTO3.setCreatedDate(LocalDateTime.now());
+
+			fanaticsTeamDTO3.setSquad(
+					new HashSet<>(
+							List.of(
+									new FanaticsTeamPlayerDTO(
+											0,
+											4661
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											28035
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											63641
+									),
+									new FanaticsTeamPlayerDTO(
+											0,
+											3852
+									)
+							)
+					)
+			);
+//			tournamentService.createTeam(2,fanaticsTeamDTO2);
+//			tournamentService.createTeam(2,fanaticsTeamDTO3);
 //
-//			teams.forEach(team->System.out.println(team));
-//			System.out.println(rcb.getSquad());
-//			teamRepo.delete(gt);
-//			Player vk=playerRepo.findById(1).get();
-//			Player hp=playerRepo.findById(2).get();
-//			Player rk=playerRepo.findById(3).get();
-//
-//			Match rcbVsGt=matchRepo.findById(1).get();
-
-//			PlayerStat hpVsRcb=new PlayerStat(hp,rcbVsGt,30,0,0,0,0,0, BigDecimal.ZERO,0,0,0,0);
-//			PlayerStat rkVsRcb=new PlayerStat(rk,rcbVsGt,4,0,0,0,0,0, BigDecimal.ZERO,0,0,0,0);
-//			PlayerStat vkVsGT=new PlayerStat(vk,rcbVsGt,101,0,0,0,0,0, BigDecimal.ZERO,0,0,0,0);
-//
-//			rcbVsGt.getPlayer_stats().add(hpVsRcb);
-//			hp.getStats().add(hpVsRcb);
-//
-//			rcbVsGt.getPlayer_stats().add(rkVsRcb);
-//			rk.getStats().add(rkVsRcb);
-//
-//			rcbVsGt.getPlayer_stats().add(vkVsGT);
-//			vk.getStats().add(vkVsGT);
-//
-//			matchRepo.save(rcbVsGt);
-//			System.out.println(rcbVsGt.getPlayer_stats());
-//teamRepo.delete(rcb);
-
-
-
-
-
-
-
-
-
+//			Optional<FanaticsTeam> fanaticsTeam=tournamentService.createTeam(
+//					2,
+//					fanaticsTeamDTO
+//			);
+//			if(fanaticsTeam.isPresent()){
+//				System.out.print(fanaticsTeam.get().getId());
+//			}else{
+//				System.out.print("SOMETHING WENT WRONG");
+//			}
 
 
 
 		};
+
 	}
 
 }

@@ -43,6 +43,9 @@ public class MatchController {
     @PutMapping(path = "/{id}/scores")
     public ResponseEntity<MatchStatDTO> updateMatchScore(@PathVariable int id,@RequestBody MatchStatDTO matchStatDTO){
         if(id!=matchStatDTO.getMatchId()){
+            System.out.println("SOMETHING WRONG");
+            System.out.println(id);
+            System.out.println(matchStatDTO.getMatchId());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return matchService.updateScore(matchStatDTO)
